@@ -55,45 +55,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Shoot"",
-                    ""type"": ""Button"",
-                    ""id"": ""e7960f00-740b-4642-8d2b-50b67f2a2d7e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Alt Fire"",
                     ""type"": ""Button"",
                     ""id"": ""10c1d42f-611f-4d07-ab81-cb1e41b507c2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Grenade"",
-                    ""type"": ""Button"",
-                    ""id"": ""6a6080a6-6d28-499c-aa81-228558902069"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Flamethrower"",
-                    ""type"": ""Button"",
-                    ""id"": ""80d87048-220a-4b83-a7c4-d8ea99ed07eb"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Chainsaw"",
-                    ""type"": ""Button"",
-                    ""id"": ""f2a958ad-3729-416a-a337-033c44464770"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -197,17 +161,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""7bd3d9f2-85b8-4ef3-a141-c1966d9b19d2"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""Alt Fire"",
                     ""id"": ""0964f617-fd02-41d1-b619-137d330e0caa"",
                     ""path"": ""OneModifier"",
@@ -242,39 +195,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""89cd8956-4de9-4996-b0dc-bb01d1e7a52b"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grenade"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d273d7f5-44d0-450a-ab1b-79a921734f39"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Flamethrower"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f10638e4-51d0-4e8b-b624-0604b3d41328"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Chainsaw"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""69a0b415-5d00-4358-8c92-05513c31a108"",
                     ""path"": ""<Mouse>/delta/x"",
                     ""interactions"": """",
@@ -305,11 +225,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_AltFire = m_Player.FindAction("Alt Fire", throwIfNotFound: true);
-        m_Player_Grenade = m_Player.FindAction("Grenade", throwIfNotFound: true);
-        m_Player_Flamethrower = m_Player.FindAction("Flamethrower", throwIfNotFound: true);
-        m_Player_Chainsaw = m_Player.FindAction("Chainsaw", throwIfNotFound: true);
         m_Player_MouseX = m_Player.FindAction("MouseX", throwIfNotFound: true);
         m_Player_MouseY = m_Player.FindAction("MouseY", throwIfNotFound: true);
     }
@@ -374,11 +290,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_AltFire;
-    private readonly InputAction m_Player_Grenade;
-    private readonly InputAction m_Player_Flamethrower;
-    private readonly InputAction m_Player_Chainsaw;
     private readonly InputAction m_Player_MouseX;
     private readonly InputAction m_Player_MouseY;
     public struct PlayerActions
@@ -388,11 +300,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @AltFire => m_Wrapper.m_Player_AltFire;
-        public InputAction @Grenade => m_Wrapper.m_Player_Grenade;
-        public InputAction @Flamethrower => m_Wrapper.m_Player_Flamethrower;
-        public InputAction @Chainsaw => m_Wrapper.m_Player_Chainsaw;
         public InputAction @MouseX => m_Wrapper.m_Player_MouseX;
         public InputAction @MouseY => m_Wrapper.m_Player_MouseY;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -413,21 +321,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @AltFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @AltFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @AltFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
-                @Grenade.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrenade;
-                @Grenade.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrenade;
-                @Grenade.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrenade;
-                @Flamethrower.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFlamethrower;
-                @Flamethrower.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFlamethrower;
-                @Flamethrower.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFlamethrower;
-                @Chainsaw.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChainsaw;
-                @Chainsaw.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChainsaw;
-                @Chainsaw.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnChainsaw;
                 @MouseX.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseX;
                 @MouseX.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseX;
                 @MouseX.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseX;
@@ -447,21 +343,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @Shoot.started += instance.OnShoot;
-                @Shoot.performed += instance.OnShoot;
-                @Shoot.canceled += instance.OnShoot;
                 @AltFire.started += instance.OnAltFire;
                 @AltFire.performed += instance.OnAltFire;
                 @AltFire.canceled += instance.OnAltFire;
-                @Grenade.started += instance.OnGrenade;
-                @Grenade.performed += instance.OnGrenade;
-                @Grenade.canceled += instance.OnGrenade;
-                @Flamethrower.started += instance.OnFlamethrower;
-                @Flamethrower.performed += instance.OnFlamethrower;
-                @Flamethrower.canceled += instance.OnFlamethrower;
-                @Chainsaw.started += instance.OnChainsaw;
-                @Chainsaw.performed += instance.OnChainsaw;
-                @Chainsaw.canceled += instance.OnChainsaw;
                 @MouseX.started += instance.OnMouseX;
                 @MouseX.performed += instance.OnMouseX;
                 @MouseX.canceled += instance.OnMouseX;
@@ -477,11 +361,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnShoot(InputAction.CallbackContext context);
         void OnAltFire(InputAction.CallbackContext context);
-        void OnGrenade(InputAction.CallbackContext context);
-        void OnFlamethrower(InputAction.CallbackContext context);
-        void OnChainsaw(InputAction.CallbackContext context);
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
     }

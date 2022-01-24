@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
     [SerializeField] PlayerActions playerActionsScript;
     [SerializeField] MouseLook mouseLookScript;
-
     PlayerControls controls;
     PlayerControls.PlayerActions playerActions;
-
     Vector2 movementInput;
     Vector2 mouseInput;
 
@@ -27,6 +26,7 @@ public class InputManager : MonoBehaviour
         playerActions.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
         //shift
         playerActions.Dash.performed += _ => playerActionsScript.DashInput();
+        
     }
 
     private void Update()
@@ -44,4 +44,5 @@ public class InputManager : MonoBehaviour
     {
         controls.Disable();
     }
+    
 }
