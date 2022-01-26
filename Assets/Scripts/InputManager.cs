@@ -21,11 +21,14 @@ public class InputManager : MonoBehaviour
         playerActions.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
         //space
         playerActions.Jump.performed += _ => playerActionsScript.JumpInput();
+        
         //mousemovement
         playerActions.MouseX.performed += ctx => mouseInput.x = ctx.ReadValue<float>();
         playerActions.MouseY.performed += ctx => mouseInput.y = ctx.ReadValue<float>();
         //shift
         playerActions.Dash.performed += _ => playerActionsScript.DashInput();
+
+        
         
     }
 

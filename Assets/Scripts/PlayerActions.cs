@@ -20,13 +20,16 @@ public class PlayerActions : MonoBehaviour
 
     //dash
     bool dash = false;
-    [SerializeField] float dashSpeed = 20f;
-    [SerializeField] float dashTime = 0.25f;
+    [SerializeField] float dashSpeed = 50f;
+    [SerializeField] float dashTime = 0.2f;
     float dashCooldown = 2f;
     float lastDash = 0f;
 
+    public GameObject gc;
+    RuneCheck rc;
     private void Start()
     {
+        rc = gc.GetComponent<RuneCheck>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -57,6 +60,9 @@ public class PlayerActions : MonoBehaviour
         {
             if (isGrounded)
             {
+                if(rc.hasRune1 == false){
+                    rc.hasRune1 = true;
+                }
                 verticalVelocity.y = Mathf.Sqrt(-2f * jumpHeight * gravity);
                 canDoubleJump = true;
             }
@@ -80,6 +86,7 @@ public class PlayerActions : MonoBehaviour
             dash = false;
             
         }
+        
     }
 
 
@@ -102,12 +109,29 @@ public class PlayerActions : MonoBehaviour
 
     IEnumerator Dash() {
         float start = Time.time;
-        while (Time.time < start + dashTime) {
+        float xDir = movementInput.x;
+        float yDir = movementInput.y;
+
+        if(xDir == 0 && yDir == 0){
+            yDir = 1.0f;
+        }
+
+        if(rc.hasRune1 == true){
+            Vector3 movementDirection = transform.right * xDir +
+            transform.forward * yDir;
+            while (Time.time < start + dashTime*1.5f) {
             verticalVelocity.y = 0f;
-            Vector3 movementDirection = transform.right * movementInput.x +
-            transform.forward * movementInput.y;
             controller.Move(movementDirection * dashSpeed * Time.deltaTime);
             yield return null;
+        }
+        } else{
+            while (Time.time < start + dashTime) {
+            verticalVelocity.y = 0f;
+            Vector3 movementDirection = transform.right * xDir +
+            transform.forward * yDir;
+            controller.Move(movementDirection * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
         }
         verticalVelocity.y += gravity * Time.deltaTime;
     }

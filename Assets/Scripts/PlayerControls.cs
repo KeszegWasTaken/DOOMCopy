@@ -55,15 +55,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Alt Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""10c1d42f-611f-4d07-ab81-cb1e41b507c2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""MouseX"",
                     ""type"": ""PassThrough"",
                     ""id"": ""de5d5fe4-5931-4164-9d47-a70ea00f46c5"",
@@ -161,39 +152,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Alt Fire"",
-                    ""id"": ""0964f617-fd02-41d1-b619-137d330e0caa"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alt Fire"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""ba6366d3-9fcd-4f69-8f9e-14f98c8e78d6"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alt Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""ca42b009-cf77-4881-b63e-10b32f97f3f7"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alt Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""69a0b415-5d00-4358-8c92-05513c31a108"",
                     ""path"": ""<Mouse>/delta/x"",
@@ -216,6 +174,54 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Gun"",
+            ""id"": ""3a0d728e-2c1a-484c-87cc-aba2cb43f9b8"",
+            ""actions"": [
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""05e6c5a8-612c-4550-955d-9c8b320bde96"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Altfire"",
+                    ""type"": ""Button"",
+                    ""id"": ""93191c7d-38bd-4dee-856f-30ea23e6196d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""970102f9-3a5f-4b2e-978c-044d456fa51b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ca4941e-99fa-4ce6-86a8-2994c9cc8d3d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Altfire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -225,9 +231,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_AltFire = m_Player.FindAction("Alt Fire", throwIfNotFound: true);
         m_Player_MouseX = m_Player.FindAction("MouseX", throwIfNotFound: true);
         m_Player_MouseY = m_Player.FindAction("MouseY", throwIfNotFound: true);
+        // Gun
+        m_Gun = asset.FindActionMap("Gun", throwIfNotFound: true);
+        m_Gun_Shoot = m_Gun.FindAction("Shoot", throwIfNotFound: true);
+        m_Gun_Altfire = m_Gun.FindAction("Altfire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -290,7 +299,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_AltFire;
     private readonly InputAction m_Player_MouseX;
     private readonly InputAction m_Player_MouseY;
     public struct PlayerActions
@@ -300,7 +308,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @AltFire => m_Wrapper.m_Player_AltFire;
         public InputAction @MouseX => m_Wrapper.m_Player_MouseX;
         public InputAction @MouseY => m_Wrapper.m_Player_MouseY;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -321,9 +328,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @AltFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
-                @AltFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
-                @AltFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @MouseX.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseX;
                 @MouseX.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseX;
                 @MouseX.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseX;
@@ -343,9 +347,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @AltFire.started += instance.OnAltFire;
-                @AltFire.performed += instance.OnAltFire;
-                @AltFire.canceled += instance.OnAltFire;
                 @MouseX.started += instance.OnMouseX;
                 @MouseX.performed += instance.OnMouseX;
                 @MouseX.canceled += instance.OnMouseX;
@@ -356,13 +357,58 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Gun
+    private readonly InputActionMap m_Gun;
+    private IGunActions m_GunActionsCallbackInterface;
+    private readonly InputAction m_Gun_Shoot;
+    private readonly InputAction m_Gun_Altfire;
+    public struct GunActions
+    {
+        private @PlayerControls m_Wrapper;
+        public GunActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Shoot => m_Wrapper.m_Gun_Shoot;
+        public InputAction @Altfire => m_Wrapper.m_Gun_Altfire;
+        public InputActionMap Get() { return m_Wrapper.m_Gun; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GunActions set) { return set.Get(); }
+        public void SetCallbacks(IGunActions instance)
+        {
+            if (m_Wrapper.m_GunActionsCallbackInterface != null)
+            {
+                @Shoot.started -= m_Wrapper.m_GunActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_GunActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_GunActionsCallbackInterface.OnShoot;
+                @Altfire.started -= m_Wrapper.m_GunActionsCallbackInterface.OnAltfire;
+                @Altfire.performed -= m_Wrapper.m_GunActionsCallbackInterface.OnAltfire;
+                @Altfire.canceled -= m_Wrapper.m_GunActionsCallbackInterface.OnAltfire;
+            }
+            m_Wrapper.m_GunActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @Altfire.started += instance.OnAltfire;
+                @Altfire.performed += instance.OnAltfire;
+                @Altfire.canceled += instance.OnAltfire;
+            }
+        }
+    }
+    public GunActions @Gun => new GunActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnAltFire(InputAction.CallbackContext context);
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
+    }
+    public interface IGunActions
+    {
+        void OnShoot(InputAction.CallbackContext context);
+        void OnAltfire(InputAction.CallbackContext context);
     }
 }

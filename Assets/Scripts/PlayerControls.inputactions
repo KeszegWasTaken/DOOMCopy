@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Alt Fire",
-                    "type": "Button",
-                    "id": "10c1d42f-611f-4d07-ab81-cb1e41b507c2",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MouseX",
                     "type": "PassThrough",
                     "id": "de5d5fe4-5931-4164-9d47-a70ea00f46c5",
@@ -139,39 +130,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Alt Fire",
-                    "id": "0964f617-fd02-41d1-b619-137d330e0caa",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alt Fire",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "ba6366d3-9fcd-4f69-8f9e-14f98c8e78d6",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alt Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "ca42b009-cf77-4881-b63e-10b32f97f3f7",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Alt Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "69a0b415-5d00-4358-8c92-05513c31a108",
                     "path": "<Mouse>/delta/x",
@@ -190,6 +148,54 @@
                     "processors": "",
                     "groups": "",
                     "action": "MouseY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Gun",
+            "id": "3a0d728e-2c1a-484c-87cc-aba2cb43f9b8",
+            "actions": [
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "05e6c5a8-612c-4550-955d-9c8b320bde96",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Altfire",
+                    "type": "Button",
+                    "id": "93191c7d-38bd-4dee-856f-30ea23e6196d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "970102f9-3a5f-4b2e-978c-044d456fa51b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ca4941e-99fa-4ce6-86a8-2994c9cc8d3d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Altfire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
