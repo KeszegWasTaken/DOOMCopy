@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health = 10000;
+    public int health = 3000;
     // Start is called before the first frame update
     public void takeDamage(int damage){
         health -= damage;
@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
+
+
     void Die(){
         Destroy(gameObject);
         //TODO add death effect

@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     Transform playerCamera;
     public float speed = 50f;
-    public int damage = 50;
+    public int damage = 37;
     float position;
     // Start is called before the first frame update
     void Start()
@@ -27,8 +27,13 @@ public class Bullet : MonoBehaviour
             Enemy enemy = collision.collider.gameObject.GetComponent<Enemy>();
             if(enemy != null){
                 enemy.takeDamage(damage);
+            } 
+        } else if(collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Weakpoint")){
+                WeakPoint wp = collision.collider.gameObject.GetComponent<WeakPoint>();
+                if(wp != null){
+                    wp.wpTakeDamage(damage);
+                }
             }
-        }
         Destroy(gameObject);
     }
 }

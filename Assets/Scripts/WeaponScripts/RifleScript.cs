@@ -16,23 +16,28 @@ public class RifleScript : MonoBehaviour
     public LayerMask playerProjectile;
 
     [Header("Alt Fire Settings")]
-    int altFireDamage = 10000;
+    int altFireDamage = 750;
     float altFireRange = 500;
+
+    float altFireRate = 3f;
+    private float altFireTime = 0f;
     
     public LineRenderer line;
+    public LayerMask playerMask;
 
     // Start is called before the first frame update
     void Start()
     {
         m = InputSystem.GetDevice<Mouse>();
         line.useWorldSpace = true;
+        playerCamera = Camera.main;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(m.rightButton.isPressed && m.leftButton.wasPressedThisFrame){
+        if(m.rightButton.isPressed && m.leftButton.wasPressedThisFrame && (Time.time >= altFireTime)){
             StartCoroutine(AltShoot());
         } else if(m.leftButton.wasPressedThisFrame && (Time.time >= fireTime) && !m.rightButton.isPressed || m.leftButton.isPressed && (Time.time >= fireTime) && !m.rightButton.isPressed){
             Shoot();
@@ -44,10 +49,16 @@ public class RifleScript : MonoBehaviour
     {
         Vector3 center;
         RaycastHit hit;
-        if(Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out hit, altFireRange)){
+        if(Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out hit, altFireRange, ~playerMask)){
+            print(hit.transform.name);
             Enemy enemy = hit.transform.GetComponent<Enemy>();
             if(enemy != null){
                 enemy.takeDamage(altFireDamage);
+            } else{
+                WeakPoint wp = hit.transform.GetComponent<WeakPoint>();
+                if(wp != null){
+                    wp.wpTakeDamage(altFireDamage);
+                }
             }
             line.SetPosition(0, BulletStart.position);
             line.SetPosition(1, hit.point);
@@ -62,6 +73,8 @@ public class RifleScript : MonoBehaviour
         yield return new WaitForSeconds(0.02f);
         line.enabled = false;
 
+        altFireTime = Time.time + altFireRate;
+
     }
 
     private void Shoot(){
@@ -70,7 +83,7 @@ public class RifleScript : MonoBehaviour
         Vector3 center;
 
         //~playerProjectile - avoid casting to other bullets
-        if(Physics.Raycast(ray, out target, ~playerProjectile))
+        if(Physics.Raycast(ray, out target, 1000f, ~playerProjectile))
             center = target.point;
         else
             center = ray.GetPoint(500);

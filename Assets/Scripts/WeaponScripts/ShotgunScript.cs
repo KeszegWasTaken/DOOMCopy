@@ -35,6 +35,11 @@ public class ShotgunScript : MonoBehaviour
             Enemy enemy = hit.transform.GetComponent<Enemy>();
             if(enemy != null){
                 enemy.takeDamage(damage);
+            } else{
+                WeakPoint wp = hit.transform.GetComponent<WeakPoint>();
+                if(wp != null){
+                    wp.wpTakeDamage(damage);
+                }
             }
         }
     }
