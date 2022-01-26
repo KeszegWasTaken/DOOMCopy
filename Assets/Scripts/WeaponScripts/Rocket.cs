@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Rocket : MonoBehaviour
 {
     Transform playerCamera;
-    public int damage = 37;
-    
-    // Start is called before the first frame update
+    public int damage = 1000;
     void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
@@ -22,17 +20,21 @@ public class Bullet : MonoBehaviour
         }
     }
     void OnCollisionEnter(Collision collision){
-        if(collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")){
-            Enemy enemy = collision.collider.gameObject.GetComponent<Enemy>();
-            if(enemy != null){
-                enemy.takeDamage(damage);
-            } 
-        } else if(collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyWeakpoint")){
-                WeakPoint wp = collision.collider.gameObject.GetComponent<WeakPoint>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+
+        foreach(Collider inRange in colliders){
+            if(inRange.gameObject.layer == LayerMask.NameToLayer("Enemy")){
+                Enemy enemy = inRange.gameObject.GetComponent<Enemy>();
+                if(enemy != null){
+                    enemy.takeDamage(damage);
+                } 
+            } else if(inRange.gameObject.layer == LayerMask.NameToLayer("EnemyWeakpoint")){
+                WeakPoint wp = inRange.gameObject.GetComponent<WeakPoint>();
                 if(wp != null){
                     wp.wpTakeDamage(damage);
                 }
             }
+        }
         Destroy(gameObject);
     }
 }

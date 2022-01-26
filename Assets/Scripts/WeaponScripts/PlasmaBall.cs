@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlasmaBall : MonoBehaviour
 {
     Transform playerCamera;
-    public int damage = 37;
-    
-    // Start is called before the first frame update
+    public int damage = 25;
+
     void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
         playerCamera = Camera.main.transform;
     }
-
-    // Update is called once per frame
     void Update()
     {
         if((gameObject.transform.position - playerCamera.position).magnitude > 500 ){

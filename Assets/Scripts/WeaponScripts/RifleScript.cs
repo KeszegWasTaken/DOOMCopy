@@ -13,7 +13,6 @@ public class RifleScript : MonoBehaviour
     public GameObject bulletPrefab;
     float firerate = 0.25f;
     private float fireTime = 0f;
-    public LayerMask playerProjectile;
 
     [Header("Alt Fire Settings")]
     int altFireDamage = 750;
@@ -23,7 +22,7 @@ public class RifleScript : MonoBehaviour
     private float altFireTime = 0f;
     
     public LineRenderer line;
-    public LayerMask playerMask;
+    public LayerMask ignoredMasks;
 
     // Start is called before the first frame update
     void Start()
@@ -49,8 +48,7 @@ public class RifleScript : MonoBehaviour
     {
         Vector3 center;
         RaycastHit hit;
-        if(Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out hit, altFireRange, ~playerMask)){
-            print(hit.transform.name);
+        if(Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out hit, altFireRange, ~ignoredMasks)){
             Enemy enemy = hit.transform.GetComponent<Enemy>();
             if(enemy != null){
                 enemy.takeDamage(altFireDamage);
@@ -83,8 +81,8 @@ public class RifleScript : MonoBehaviour
         Vector3 center;
 
         //~playerProjectile - avoid casting to other bullets
-        if(Physics.Raycast(ray, out target, 1000f, ~playerProjectile))
-            center = target.point;
+        if(Physics.Raycast(ray, out target, 1000f, ~ignoredMasks)){
+            center = target.point;}
         else
             center = ray.GetPoint(500);
 
