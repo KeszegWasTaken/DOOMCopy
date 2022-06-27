@@ -9,7 +9,6 @@ public class WeaponSwitching : MonoBehaviour
     Keyboard kb;
     Mouse m;
 
-    public Transform cameraTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +38,12 @@ public class WeaponSwitching : MonoBehaviour
         }
         if(kb.digit2Key.wasPressedThisFrame){
             selectedWeapon = 1;
+        }
+        if(kb.digit3Key.wasPressedThisFrame){
+            selectedWeapon = 2;
+        }
+        if(kb.digit4Key.wasPressedThisFrame){
+            selectedWeapon = 3;
         } 
 
         if(prevWeapon != selectedWeapon){

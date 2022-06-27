@@ -32,14 +32,10 @@ public class ShotgunScript : MonoBehaviour
     void Shoot(){
         RaycastHit hit;
         if(Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out hit, range)){
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
-            if(enemy != null){
-                enemy.takeDamage(damage);
-            } else{
-                WeakPoint wp = hit.transform.GetComponent<WeakPoint>();
-                if(wp != null){
-                    wp.wpTakeDamage(damage);
-                }
+            ITakeDamage enemy = hit.collider.transform.GetComponent<ITakeDamage>();
+            if (enemy != null)
+            {
+                enemy.takeDamage(damage, "shotgun");
             }
         }
     }

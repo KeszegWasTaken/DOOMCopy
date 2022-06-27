@@ -6,30 +6,60 @@ public class PlasmaBall : MonoBehaviour
 {
     Transform playerCamera;
     public int damage = 25;
+    
+    private Vector3 previousPos;
+    private Vector3 currentPos;
+    private Vector3 velocityDirection;
+    private float stepSize;
+    private Rigidbody rb;
+
+    private RaycastHit hit;
+    public LayerMask layerMask;
 
     void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
-        playerCamera = Camera.main.transform;
+        rb = GetComponent<Rigidbody>();
+        Destroy(gameObject, 10);
+
+        previousPos = transform.position;
     }
-    void Update()
+
+    void FixedUpdate()
     {
-        if((gameObject.transform.position - playerCamera.position).magnitude > 500 ){
-            Destroy(gameObject);
+        velocityDirection = rb.velocity.normalized;
+        currentPos = transform.position;
+
+        stepSize = (currentPos - previousPos).magnitude;
+        if (stepSize > 0.01)
+        {
+            if (Physics.Raycast(previousPos, velocityDirection, out hit, stepSize, layerMask))
+            {
+                ITakeDamage enemy = hit.collider.transform.GetComponent<ITakeDamage>();
+                if (enemy != null)
+                {
+                    enemy.takeDamage(damage, "plasma");
+                    Destroy(gameObject);
+                }
+                Destroy(gameObject);
+            }
+            else
+            {
+                previousPos = currentPos;
+            }
         }
     }
-    void OnCollisionEnter(Collision collision){
-        if(collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")){
-            Enemy enemy = collision.collider.gameObject.GetComponent<Enemy>();
-            if(enemy != null){
-                enemy.takeDamage(damage);
-            } 
-        } else if(collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyWeakpoint")){
-                WeakPoint wp = collision.collider.gameObject.GetComponent<WeakPoint>();
-                if(wp != null){
-                    wp.wpTakeDamage(damage);
-                }
+
+    /*void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            ITakeDamage hit = other.collider.gameObject.GetComponent<ITakeDamage>();
+            if (hit != null)
+            {
+                hit.takeDamage(damage, "plasma");
             }
+        }
         Destroy(gameObject);
-    }
+    }*/
 }

@@ -44,18 +44,14 @@ public class PlasmaRifleScript : MonoBehaviour
 
         foreach(Collider inRange in colliders){
             if(inRange.gameObject.layer == LayerMask.NameToLayer("Enemy")){
-                Enemy enemy = inRange.gameObject.GetComponent<Enemy>();
-                if(enemy != null){
-                    enemy.takeDamage(altFireDamage);
-                } 
-            } else if(inRange.gameObject.layer == LayerMask.NameToLayer("EnemyWeakpoint")){
-                WeakPoint wp = inRange.gameObject.GetComponent<WeakPoint>();
-                if(wp != null){
-                    wp.wpTakeDamage(altFireDamage);
+                ITakeDamage hit = inRange.gameObject.GetComponent<ITakeDamage>();
+                if (hit != null)
+                {
+                    hit.takeDamage(altFireDamage, "plasma");
                 }
             }
         }
-        charge = 0;
+        charge = 0; 
     }
 
     private void Shoot(){

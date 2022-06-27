@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     Transform playerCamera;
-    public int damage = 1000;
+    public int damage = 100;
     void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
@@ -24,15 +24,11 @@ public class Rocket : MonoBehaviour
 
         foreach(Collider inRange in colliders){
             if(inRange.gameObject.layer == LayerMask.NameToLayer("Enemy")){
-                Enemy enemy = inRange.gameObject.GetComponent<Enemy>();
-                if(enemy != null){
-                    enemy.takeDamage(damage);
-                } 
-            } else if(inRange.gameObject.layer == LayerMask.NameToLayer("EnemyWeakpoint")){
-                WeakPoint wp = inRange.gameObject.GetComponent<WeakPoint>();
-                if(wp != null){
-                    wp.wpTakeDamage(damage);
-                }
+                ITakeDamage hit = inRange.gameObject.GetComponent<ITakeDamage>();
+                    if (hit != null)
+                    {
+                        hit.takeDamage(damage, "rocket");
+                    }
             }
         }
         Destroy(gameObject);

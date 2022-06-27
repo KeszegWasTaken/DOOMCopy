@@ -15,7 +15,7 @@ public class RifleScript : MonoBehaviour
     private float fireTime = 0f;
 
     [Header("Alt Fire Settings")]
-    int altFireDamage = 750;
+    int altFireDamage = 1000;
     float altFireRange = 500;
 
     float altFireRate = 3f;
@@ -24,13 +24,15 @@ public class RifleScript : MonoBehaviour
     public LineRenderer line;
     public LayerMask ignoredMasks;
 
+    private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
         m = InputSystem.GetDevice<Mouse>();
         line.useWorldSpace = true;
         playerCamera = Camera.main;
-        
+        anim = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,7 @@ public class RifleScript : MonoBehaviour
             StartCoroutine(AltShoot());
         } else if(m.leftButton.wasPressedThisFrame && (Time.time >= fireTime) && !m.rightButton.isPressed || m.leftButton.isPressed && (Time.time >= fireTime) && !m.rightButton.isPressed){
             Shoot();
+            anim.SetTrigger("Shoot");
         }
         
     }
@@ -49,15 +52,12 @@ public class RifleScript : MonoBehaviour
         Vector3 center;
         RaycastHit hit;
         if(Physics.Raycast(playerCamera.transform.position,playerCamera.transform.forward, out hit, altFireRange, ~ignoredMasks)){
-            Enemy enemy = hit.transform.GetComponent<Enemy>();
-            if(enemy != null){
-                enemy.takeDamage(altFireDamage);
-            } else{
-                WeakPoint wp = hit.transform.GetComponent<WeakPoint>();
-                if(wp != null){
-                    wp.wpTakeDamage(altFireDamage);
-                }
+            ITakeDamage enemy = hit.collider.transform.GetComponent<ITakeDamage>();
+            if (enemy != null)
+            {
+                enemy.takeDamage(altFireDamage, "rifle");
             }
+
             line.SetPosition(0, BulletStart.position);
             line.SetPosition(1, hit.point);
         } else{
@@ -88,6 +88,7 @@ public class RifleScript : MonoBehaviour
 
         fireTime = Time.time + firerate;
         GameObject bullet = Instantiate(bulletPrefab, BulletStart.position, BulletStart.rotation);
-        bullet.GetComponent<Rigidbody>().velocity = (center - BulletStart.transform.position).normalized*25;
+        bullet.GetComponent<Rigidbody>().velocity = (center - BulletStart.transform.position).normalized*50;
+        
     }
 }
